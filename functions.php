@@ -37,3 +37,26 @@ function sadaf_widgets_init() {
 }
 
 add_action('widgets_init', 'sadaf_widgets_init');
+//custom post type اضافه کردن
+function sadaf_register_post_type(){
+    register_post_type('product',array(
+        'labels'=> array(
+            'name'=>'محصولات',
+            'singular_name'=>'محصول',
+            'add_new'=>'افزودن محصول',
+            'add_new_item'=>'افزودن محصول جدید',
+            'edit_item'=>'ویرایش محصول',
+            'all_items'=>'همه محصولات'
+        ),
+        'public'=>true,
+        'menu_icon'=>'dashicons-cart',
+        'supports'=> array(
+            'title','editor','thumbnail'
+        ),
+        'has_archive'=>true,
+        'rewrite'=> array(
+            'slug'=>'products'
+        )
+    ));
+}
+add_action('init','sadaf_register_post_type');
