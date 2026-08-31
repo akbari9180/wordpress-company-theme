@@ -60,3 +60,68 @@ function sadaf_register_post_type(){
     ));
 }
 add_action('init','sadaf_register_post_type');
+//taxonomy افزودن 
+//product_category براساس 
+function sadaf_register_product_taxonomy(){
+    register_taxonomy(
+    'product_category',
+    'product',
+    array(
+        'label'        => 'دسته‌بندی محصولات',
+        'public'       => true,
+        'hierarchical' => true,
+        'rewrite'      => array(
+            'slug' => 'product-category'
+        ),
+    )
+);
+}
+add_action('init','sadaf_register_product_taxonomy');
+//براساس برند
+function sadaf_register_barand_taxonomy(){
+    register_taxonomy(
+        'brand',
+        'product',
+        array(
+            'label'=>'برندها',
+            'public'=>true,
+            'hierarchical' => false,
+            'rewrite'=>array(
+                'slug'=>'brand'
+            )
+            
+        )
+    );
+}
+add_action('init','sadaf_register_barand_taxonomy');
+//custom Field افزودن
+function sadaf_product_price_metabox(){
+    add_meta_box(
+        'product_price',
+        'اطلاعات محصول',
+        'sadaf_product_price_callback',
+        'product',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes','sadaf_product_price_metabox');
+//تابع محتوای متا باکس بالا
+function sadaf_product_price_callback($post){
+    $price=get_post_meta($post->ID,
+    'product_price',true);
+    ?>
+    <label for="product_price">قیمت :</label>
+    <input type="text" id="product_price" name="product_price" 
+    value="<?php echo esc_attr($price);?>" style="width:100%;">
+ <?php   
+}
+//دخیره مقدار متاباکس در دیتابیس
+function sadaf_save_product_price($post_id){
+    
+   if(isset($_POST['product_price'])){
+     $price = sanitize_text_field($_POST['product_price']);//اعتبارسنجی و پاکسازی ورودی کاربر قبل از ذخیره در دیتابیس
+     update_post_meta($post_id,'product_price',$price);
+   }
+}
+add_action('save_post_product', 'sadaf_save_product_price');

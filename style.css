@@ -150,3 +150,10 @@ aside {
     width: 300px;
     background-color: aqua;
 }
+.price-product{
+  font-size: 32px;
+  font-weight: 700;
+  color: #db3131;
+  border: solid 2px;
+  padding: 5px;
+}

@@ -40,11 +40,22 @@ $categories = get_terms(
                     <?php the_title(); ?>
                 </a>
             </h2>
-
+            
             <?php the_excerpt(); ?>
 
-        </article>
+            <?php
+        $price = get_post_meta(
+            get_the_ID(),
+            'product_price',
+            true
+            );
+            ?>
 
+<p class="price-product">
+    قیمت: <?php echo esc_html($price); ?> تومان
+</p>
+
+</article>
     <?php endwhile; ?>
 
 </main>
