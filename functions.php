@@ -95,33 +95,54 @@ function sadaf_register_barand_taxonomy(){
 }
 add_action('init','sadaf_register_barand_taxonomy');
 //custom Field افزودن
-function sadaf_product_price_metabox(){
+function sadaf_product_info_metabox(){
     add_meta_box(
-        'product_price',
+        'product_info',
         'اطلاعات محصول',
-        'sadaf_product_price_callback',
+        'sadaf_product_info_callback',
         'product',
         'normal',
         'high'
     );
 }
-add_action('add_meta_boxes','sadaf_product_price_metabox');
-//تابع محتوای متا باکس بالا
-function sadaf_product_price_callback($post){
-    $price=get_post_meta($post->ID,
-    'product_price',true);
+add_action('add_meta_boxes','sadaf_product_info_metabox');
+//تابع محتوای متا باکس بالا:price/volum/country
+function sadaf_product_info_callback($post){
+    $price=get_post_meta($post->ID,'product_price',true);
+    $volume=get_post_meta($post->ID,'product_volume',true);
+    $country=get_post_meta($post->ID,'product_country',true);
     ?>
-    <label for="product_price">قیمت :</label>
-    <input type="text" id="product_price" name="product_price" 
-    value="<?php echo esc_attr($price);?>" style="width:100%;">
+    <p>
+        <label for="product_price">قیمت :</label>
+        <input type="text" id="product_price" name="product_price" 
+        value="<?php echo esc_attr($price);?>" style="width:100%;">
+    </p>
+    <p>
+        <label for="product_volume">حجم :</label>
+        <input type="text" id="product_volume" name="product_volume" 
+        value="<?php echo esc_attr($volume);?>" style="width:100%;">
+    </p>
+    <p>
+        <label for="product_country">کشورسازنده :</label>
+        <input type="text" id="product_country" name="product_country" 
+        value="<?php echo esc_attr($country);?>" style="width:100%;">
+    </p>
  <?php   
 }
 //دخیره مقدار متاباکس در دیتابیس
-function sadaf_save_product_price($post_id){
+function sadaf_save_product_info($post_id){
     
    if(isset($_POST['product_price'])){
      $price = sanitize_text_field($_POST['product_price']);//اعتبارسنجی و پاکسازی ورودی کاربر قبل از ذخیره در دیتابیس
      update_post_meta($post_id,'product_price',$price);
    }
+   if(isset($_POST['product_volume'])){
+     $volume = sanitize_text_field($_POST['product_volume']);//اعتبارسنجی و پاکسازی ورودی کاربر قبل از ذخیره در دیتابیس
+     update_post_meta($post_id,'product_volume',$volume);
+   }
+   if(isset($_POST['product_country'])){
+     $country = sanitize_text_field($_POST['product_country']);//اعتبارسنجی و پاکسازی ورودی کاربر قبل از ذخیره در دیتابیس
+     update_post_meta($post_id,'product_country',$country);
+   }
 }
-add_action('save_post_product', 'sadaf_save_product_price');
+add_action('save_post_product', 'sadaf_save_product_info');

@@ -44,17 +44,23 @@ $categories = get_terms(
             <?php the_excerpt(); ?>
 
             <?php
-        $price = get_post_meta(
-            get_the_ID(),
-            'product_price',
-            true
-            );
-            ?>
+        $price = get_post_meta(get_the_ID(),'product_price',true);
+        $volume = get_post_meta(get_the_ID(),'product_volume',true);
+        $country = get_post_meta(get_the_ID(),'product_country',true);
+     ?>
 
-<p class="price-product">
-    قیمت: <?php echo esc_html($price); ?> تومان
-</p>
+        <p class="price-product">
+            قیمت: <?php echo esc_html($price); ?> تومان
+        </p>
+        <div class="info-product">
+            <p>
+            حجم: <?php echo esc_html($volume); ?> میلی لیتر
+        </p>
+        <p>
+            کشورسازنده: <?php echo esc_html($country); ?>
+        </p>
 
+        </div>
 </article>
     <?php endwhile; ?>
 

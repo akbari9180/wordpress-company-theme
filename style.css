@@ -157,3 +157,8 @@ aside {
   border: solid 2px;
   padding: 5px;
 }
+.info-product{
+  display: flex;
+  justify-content: space-between;
+
+}
