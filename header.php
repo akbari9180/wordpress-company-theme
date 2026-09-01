@@ -6,6 +6,7 @@
     <?php wp_head()?>
 </head>
 <body <?php body_class();?>>
+    <?php do_action('sadaf_start_site');?>
     <header>
         <h1><?php bloginfo("name")?></h1>
         <nav>

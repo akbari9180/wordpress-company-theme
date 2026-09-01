@@ -146,3 +146,25 @@ function sadaf_save_product_info($post_id){
    }
 }
 add_action('save_post_product', 'sadaf_save_product_info');
+// اضافه هوک جهت تمرین
+//Action Hook
+function sadaf_hook(){
+ echo "<h1>تخفیفات ویژه سال نو</h1>";
+}
+add_action('sadaf_start_site','sadaf_hook');
+
+//Filter Hook
+function sadaf_change_product_title($title) {
+//بررسی کنه که عنوان محصول،در لوپ اصلی باشه تا فقط عنوان محصولات تغییر کنه(بررسی جایگاه)
+    if (
+        get_post_type() === 'product'
+        && in_the_loop()
+        && is_main_query()
+    ) {
+        return $title . '🐥';
+    }
+
+    return $title;
+}
+
+add_filter('the_title', 'sadaf_change_product_title');
