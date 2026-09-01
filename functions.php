@@ -148,23 +148,65 @@ function sadaf_save_product_info($post_id){
 add_action('save_post_product', 'sadaf_save_product_info');
 // اضافه هوک جهت تمرین
 //Action Hook
-function sadaf_hook(){
- echo "<h1>تخفیفات ویژه سال نو</h1>";
-}
-add_action('sadaf_start_site','sadaf_hook');
+// function sadaf_hook(){
+//  echo "<h1>تخفیفات ویژه سال نو</h1>";
+// }
+// add_action('sadaf_start_site','sadaf_hook');
 
-//Filter Hook
-function sadaf_change_product_title($title) {
-//بررسی کنه که عنوان محصول،در لوپ اصلی باشه تا فقط عنوان محصولات تغییر کنه(بررسی جایگاه)
-    if (
-        get_post_type() === 'product'
-        && in_the_loop()
-        && is_main_query()
-    ) {
-        return $title . '🐥';
+// //Filter Hook
+// function sadaf_change_product_title($title) {
+// //بررسی کنه که عنوان محصول،در لوپ اصلی باشه تا فقط عنوان محصولات تغییر کنه(بررسی جایگاه)
+//     if (
+//         get_post_type() === 'product'
+//         && in_the_loop()
+//         && is_main_query()
+//     ) {
+//         return $title . '🐥';
+//     }
+
+//     return $title;
+// }
+
+// add_filter('the_title', 'sadaf_change_product_title');
+/**************************************************** */
+//Shortcode معمولی
+// function sadaf_shortcode_hello(){
+//     return "<h2>سلام از سایت صدف شاپ</h2>";
+// }
+// add_shortcode('hello','sadaf_shortcode_hello');
+// ShortCode با اتربیوت
+// function sadaf_shortcode_hello($atts){
+//     $name=$atts['name'];
+//     return '<h1> سلام '.$name.'</h1>';
+// }
+// add_shortcode('hello','sadaf_shortcode_hello');
+//shortcode_atts()استفاده از 
+// function sadaf_hello($atts){
+//     $atts=shortcode_atts(array('name'=> 'دوست عزیز'),$atts);
+//     return '<h1>سلام '.esc_html($atts['name']).'</h1>';
+// }
+// add_shortcode('hello','sadaf_hello');
+//ترکیب Shortcode + WP_Query
+//با استفاده از شورت کد بگیم 3 محصول جدید رو نمایش بده
+function sadaf_products_shortcode($atts){
+    $atts=shortcode_atts(array("count"=>3),$atts);
+    $query=new WP_Query(
+        array(
+            'post_type'=>'product',
+            'posts_per_page'=>$atts["count"],
+            'orderby'=>'date',
+            'order'=>'DESC'
+        )
+    );
+    $output='';
+    while($query->have_posts()){
+       $query->the_post();
+        // $output.='<article>';
+        // $output.='<h2>'.esc_html(get_the_title()).'</h2>';//فقط عنوان محصول
+        // $output.='</article>'; 
+        $output.= '<article><h2>'.esc_html(get_the_title()).'</h2></article>';
     }
-
-    return $title;
+Wp_reset_postdata();
+return $output;
 }
-
-add_filter('the_title', 'sadaf_change_product_title');
+add_shortcode('products','sadaf_products_shortcode');
