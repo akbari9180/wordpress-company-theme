@@ -1,10 +1,14 @@
 <?php
-//اضافه کردن استایل
-function add_sadaf_style(){
-    wp_enqueue_style("company_style",get_stylesheet_uri());
-    
+function add_sadaf_assets(){
+    //اضافه کردن استایل
+    wp_enqueue_style("company_style", get_stylesheet_directory_uri().'/assets/css/style.css');
+    //اضافه کردن فایل جاوااسکریپت 
+    if(is_front_page()){//فقط در صفحه اصلی اجرا شود
+         wp_enqueue_script("company_script", get_stylesheet_directory_uri().'/assets/js/home.js',
+         array(),'1.0',true);
+    }
 }
-add_action('wp_enqueue_scripts','add_sadaf_style');
+add_action('wp_enqueue_scripts','add_sadaf_assets');
 //افزودن منو
 function add_option_to_site(){
     register_nav_menus(
