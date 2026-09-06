@@ -7,7 +7,7 @@ Version:1.0
 */
 @font-face {
   font-family: "Dana-Regular";
-  src: url("./fonts/Dana/woff2/DanaFaNum-Regular.woff2") format("woff2");
+  src: url("../../fonts/Dana/woff2/DanaFaNum-Regular.woff2") format("woff2");
 }
 :root {
   --color-theme: #3496cf;
@@ -18,11 +18,10 @@ Version:1.0
 }
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: "Dana-Regular";
+  font-family: "Dana-Regular"!important;
 }
 
 header {
@@ -107,13 +106,7 @@ main h1 {
   font-size: 30px;
 }
 footer {
-  max-height: 50px;
-  width: 100%;
-  padding: 2rem;
   background-color: var(--color-theme);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 .post{
     padding: 50px;

@@ -2,6 +2,9 @@
 function add_sadaf_assets(){
     //اضافه کردن استایل
     wp_enqueue_style("company_style", get_stylesheet_directory_uri().'/assets/css/style.css');
+    //اضافه کردن فایل خروجی تیلویند(اتصال تیلویند به وردپرس)
+    wp_enqueue_style("sadaf_tailwind_style", get_stylesheet_directory_uri().'/assets/css/output.css',
+    array("company_style"),'1.0');
     //اضافه کردن فایل جاوااسکریپت 
     if(is_front_page()){//فقط در صفحه اصلی اجرا شود
          wp_enqueue_script("company_script", get_stylesheet_directory_uri().'/assets/js/home.js',
