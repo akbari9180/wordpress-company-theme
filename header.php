@@ -6,9 +6,15 @@
     <?php wp_head()?>
 </head>
 <body <?php body_class();?>>
-    <?php do_action('sadaf_start_site');?>
+    <!-- یک هوک اینجا تعریف کردیم بصورت تمرینی -->
+    <!-- <?php do_action('sadaf_start_site');?> -->
     <header>
-        <h1><?php bloginfo("name")?></h1>
+            <div class='logo'>
+                <!-- متد زیر تگ a , img تولید میکنه -->
+                <?php the_custom_logo();?>
+            </div>
+           <h1><?php bloginfo("name")?></h1>
+        
         <nav>
             <?php wp_nav_menu(array('theme_location'=>'primary'));?>
         </nav>

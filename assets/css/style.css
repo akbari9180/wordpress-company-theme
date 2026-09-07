@@ -82,6 +82,23 @@ nav .menu-item-has-children:hover > .sub-menu {
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
+.logo {
+    width: 120px;
+    height: auto;
+}
+
+.logo a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+}
 main {
   flex: 1;
   /* باعث میشه تمام فضای خالی بین فوتر وهدر رو پر کنه */
@@ -107,6 +124,10 @@ main h1 {
 }
 footer {
   background-color: var(--color-theme);
+}
+.logo1{
+    width: 100px;
+    height: auto;
 }
 .post{
     padding: 50px;

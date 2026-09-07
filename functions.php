@@ -23,6 +23,12 @@ function add_option_to_site(){
      add_theme_support('post-thumbnails');
      //شاسایی عنوان مناسب برای تب
       add_theme_support('title-tag');
+      //قابلیت لوگوی سفارشی
+      add_theme_support('custom-logo');
+      //پس زمینه سفارشی
+      add_theme_support('custom-background');
+      //پشتیبانی از html5
+      add_theme_support('html5');
 
 }
 add_action('after_setup_theme','add_option_to_site');
