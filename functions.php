@@ -32,24 +32,7 @@ function add_option_to_site(){
 
 }
 add_action('after_setup_theme','add_option_to_site');
-// تنظیمات سایت بار
-function sadaf_widgets_init() {
 
-    register_sidebar(
-        array(
-            'name'          => 'Main Sidebar',
-            'id'            => 'main-sidebar',
-            'description'   => 'Sidebar اصلی سایت',
-            'before_widget' => '<div class="widget">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h3>',
-            'after_title'   => '</h3>',
-        )
-    );
-
-}
-
-add_action('widgets_init', 'sadaf_widgets_init');
 //custom post type اضافه کردن
 function sadaf_register_post_type(){
     register_post_type('product',array(
@@ -260,3 +243,35 @@ $wp_customize->add_setting('footer_text',array('default'=>'تمامی حقوق �
 $wp_customize->add_control('footer_text',array('label'=>'متن Footer','section'=>'footer_section','type'=>'textarea'));
 }
 add_action('customize_register','sadaf_customize_register');
+// Widget Area
+function sadaf_widgets_init() {
+   //Sidebar 
+    register_sidebar(
+        array(
+            'name'          => 'Main Sidebar',
+            'id'            => 'sidebar-1',
+            'description'   => 'Sidebar اصلی سایت',
+            'before_widget' => '<div class="widget">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h3>',
+            'after_title'   => '</h3>',
+        )
+    );
+    //Footer
+    register_sidebar(
+        array(
+            'name'=>"Footer",
+            'id'=>'footer-1',
+            'description'=>'ناحیه ابزارک فوتر',
+            'before_widget' => '<div class="widget">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h3>',
+            'after_title'   => '</h3>'
+
+
+        )
+    );
+
+}
+
+add_action('widgets_init', 'sadaf_widgets_init');

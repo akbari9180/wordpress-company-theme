@@ -5,9 +5,15 @@
    </div>
    <h1><?php bloginfo("name")?></h1>
    <h2><?php bloginfo("description");?></h2>
-   <div>
-    <p><?php echo esc_html(get_theme_mod('footer_text','تمامی حقوق محفوظ است'));?></p>
-   </div>
+  <div>
+    <p>
+        <?php echo esc_html(get_theme_mod('footer_text', 'تمامی حقوق محفوظ است')); ?>
+    </p>
+</div>
+
+<div class="footer-widgets">
+    <?php dynamic_sidebar('footer-1'); ?>
+</div>
 </footer>
 <?php wp_footer();?>
 </body>
