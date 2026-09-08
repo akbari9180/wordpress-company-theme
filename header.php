@@ -4,6 +4,11 @@
     <meta charset="<?php bloginfo("charset")?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head()?>
+    <style>
+        :root{
+            --color-theme:<?php echo esc_attr(get_theme_mod('primary_color','#3496cf'));?>;
+        }
+    </style>
 </head>
 <body <?php body_class();?>>
     <!-- یک هوک اینجا تعریف کردیم بصورت تمرینی -->

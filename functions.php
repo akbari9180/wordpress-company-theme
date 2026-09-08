@@ -223,3 +223,40 @@ Wp_reset_postdata();
 return $output;
 }
 add_shortcode('products','sadaf_products_shortcode');
+/******************************************* */
+//Theme custozer سفارشی ساز تم
+/******************************************* */
+//سفارشی سازی اطلاعات تماس
+function sadaf_customize_register($wp_customize){
+    $wp_customize->add_section('contact_section',array('title'=>'اطلاعات تماس','priority'=>30));
+    //برای شماره تماس
+    $wp_customize->add_setting('phone_number',array('default'=>''));
+    $wp_customize->add_control('phone_number',array('label'=>'شماره تماس',
+    'section'=>'contact_section','type'=>'text'));
+    //برای آدرس
+    $wp_customize->add_setting(
+    'address',
+    array(
+        'default' => '',
+    )
+);
+
+$wp_customize->add_control(
+    'address',
+    array(
+        'label'   => 'آدرس',
+        'section' => 'contact_section',
+        'type'    => 'text'
+    )
+);
+//سفارشی سازی رنگ اصلی سایت
+$wp_customize->add_section('colors_section',array('title'=>'رنگ های سایت','priority'=>31));
+$wp_customize->add_setting('primary_color',array('default'=>'#3496cf'));
+$wp_customize->add_control(new WP_Customize_Color_Control($wp_customize,'primary_color',
+array('label'=>'رنگ اصلی سایت','section'=>'colors_section')));
+//Footer سفارشی سازی متن
+$wp_customize->add_section('footer_section',array('title'=>'Footer','priority'=>32));
+$wp_customize->add_setting('footer_text',array('default'=>'تمامی حقوق محفوظ است'));
+$wp_customize->add_control('footer_text',array('label'=>'متن Footer','section'=>'footer_section','type'=>'textarea'));
+}
+add_action('customize_register','sadaf_customize_register');
