@@ -6,10 +6,19 @@ function add_sadaf_assets(){
     wp_enqueue_style("sadaf_tailwind_style", get_stylesheet_directory_uri().'/assets/css/output.css',
     array("company_style"),'1.0');
     //اضافه کردن فایل جاوااسکریپت 
-    if(is_front_page()){//فقط در صفحه اصلی اجرا شود
-         wp_enqueue_script("company_script", get_stylesheet_directory_uri().'/assets/js/home.js',
-         array(),'1.0',true);
-    }
+    // if(is_front_page()){//فقط در صفحه اصلی اجرا شود
+    //      wp_enqueue_script("company_script", get_stylesheet_directory_uri().'/assets/js/home.js',
+    //      array(),'1.0',true);
+    // }
+    wp_enqueue_script("company_script", get_stylesheet_directory_uri().'/assets/js/home.js',
+   array(),'1.0',true);
+   //ساخت یک nonce برای انتقال به جاوااسکریپت
+   wp_localize_script(
+    'company_script',
+    'ajaxData',
+    array(
+        'nonce' => wp_create_nonce('load_more_posts')
+    ));
 }
 add_action('wp_enqueue_scripts','add_sadaf_assets');
 //افزودن منو
@@ -275,3 +284,50 @@ function sadaf_widgets_init() {
 }
 
 add_action('widgets_init', 'sadaf_widgets_init');
+// AJAX
+function sadaf_load_more_posts(){
+    //Nonce بررسی
+    check_ajax_referer(
+    'load_more_posts',
+    'nonce'
+);
+    //گرفتن psge از جاوااسکریپت
+    $page=isset($_POST['page'])?absint($_POST['page']):1;
+    //یک کوئری مینویسیم برای نمایش 
+    $query=new WP_Query(array(
+        'post_type'=>'post',
+        'posts_per_page'=>3,
+        'paged'=>$page
+    ));
+    $html='';
+     $no_more_posts=false;
+    //نمایش
+    while($query->have_posts()){
+        
+        $query->the_post();
+        //HTMLوارد کردن مستقیم 
+        // echo '<article>';
+        // echo '<h2>' . esc_html(get_the_title()) . '</h2>';
+        // echo '</article>';
+        //تبدیل کد echo ->  json
+        //قدم اول
+        $html.='<article>';
+        $html .= '<h2>
+    <a href="' . esc_url(get_permalink()) . '">
+        ' . esc_html(get_the_title()) . '
+    </a>
+</h2>';
+        $html.='</article>';
+    }
+      if ($query->max_num_pages <= $page) {
+        $no_more_posts=true;
+    }
+    //قدم دوم
+       wp_send_json_success(array('html'=>$html,'no_more_posts' => $no_more_posts));
+    //اگر با json ارسال بشن دیگه نیازی بهشون نیست
+    // wp_reset_postdata();
+    // wp_die();
+
+}
+add_action('wp_ajax_load_more_posts','sadaf_load_more_posts');
+add_action('wp_ajax_priv_load_more_posts','sadaf_load_more_posts');
